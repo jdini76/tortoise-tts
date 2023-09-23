@@ -309,15 +309,15 @@ After you've played with them, you can use them to generate speech by creating a
    #### prepare_text_file_for_tts.py
    This script is most useful if you have a epub audio book file. It will convert the epub file to txt file and it will format the file a little for better processing. Some manuel modification may need to be done after this is run to      remove unwanted text. It will also add chapter labels to sections if there is a number on a lone line. 
 
-   Before Example:
-   End of chapter text here.
-   2
-   Start of new chapter here
+   Before Example:\
+   End of chapter text here.\
+   2\
+   Start of new chapter here.\
 
-   After Example:
-   End of chapter text here.
-   Chapter 2
-   Start of new chapter here.
+   After Example:\
+   End of chapter text here.\
+   Chapter 2\
+   Start of new chapter here.\
    
    #### parse_text.py
    Thsi script will take a single text file separate it into multiple text files based on a parsing keyword. Best used to create files based on chapters. If you have Chapter 1, Chapter 2, Chapter 3 etc, you can us "Chapter" as the         parsing keyword and will separate the textfile into chapterfiles. It will also name the files with the keyword in the filename with the value. If uou have a Prologue and Epilogue you will need to manually sepatate them into a file.
