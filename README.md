@@ -177,9 +177,9 @@ argument.
 
 ### tts_folder.py
 This script will take in a source folder containing multiple text files.
-
+```shell
 python tortoise/tts_folder.py --input_folder c:/input/folder --voice random --preset fast --output_folder c:/output/folder
-
+```
 It will iterate through the text fild processing each text file to TTS. It will process the text files the same way as it does with read.py by breaking up the textfile into sentences. It will save each sentence to a text file in a new folder under the output folder for reference.  This can be useful if the wav file did not process properly. You can then run the read.py for the specific text file named the same as the wav file without having to hunt through the main textfile which can contain many lines of dialogue. Once a textfile is processed it will move the file to a completed folder within the same input folder. 
 
 If the script is stopped before completing all the textfiles within a folder, if restarted with the same input and output folder locations, it will parse through the folders to find the last completed sentence and continue with the next sentence of the textfile.
@@ -310,14 +310,14 @@ After you've played with them, you can use them to generate speech by creating a
    This script is most useful if you have a epub audio book file. It will convert the epub file to txt file and it will format the file a little for better processing. Some manuel modification may need to be done after this is run to      remove unwanted text. It will also add chapter labels to sections if there is a number on a lone line. 
 
    Before Example:\
-   End of chapter text here.\
-   2\
-   Start of new chapter here.\
+   End of chapter text here.  
+   2  
+   Start of new chapter here.  
 
-   After Example:\
-   End of chapter text here.\
-   Chapter 2\
-   Start of new chapter here.\
+   After Example:  
+   End of chapter text here.  
+   Chapter 2  
+   Start of new chapter here.  
    
    #### parse_text.py
    Thsi script will take a single text file separate it into multiple text files based on a parsing keyword. Best used to create files based on chapters. If you have Chapter 1, Chapter 2, Chapter 3 etc, you can us "Chapter" as the         parsing keyword and will separate the textfile into chapterfiles. It will also name the files with the keyword in the filename with the value. If uou have a Prologue and Epilogue you will need to manually sepatate them into a file.
