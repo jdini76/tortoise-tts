@@ -10,6 +10,10 @@ This repo contains all the code needed to run Tortoise TTS in inference mode.
 Manuscript: https://arxiv.org/abs/2305.07243
 
 ### Version history
+### v2.9; 2023/9/22
+- Added new script to read multiple text files from folder
+- Added ability to continue where at last point if script stopped
+- Other changes to clear up some confusion
 ### v2.8; 2023/9/13
 - Added custom tokenizer for non-english models
 #### v2.7; 2023/7/26
@@ -149,7 +153,6 @@ pip install .
 Be aware that DeepSpeed is disabled on Apple Silicon since it does not work. The flag `--use_deepspeed` is ignored.
 You may need to prepend `PYTORCH_ENABLE_MPS_FALLBACK=1` to the commands below to make them work since MPS does not support all the operations in Pytorch.
 
-
 ### do_tts.py
 
 This script allows you to speak a single phrase with one or more voices.
@@ -171,6 +174,15 @@ output that as well.
 
 Sometimes Tortoise screws up an output. You can re-generate any bad clips by re-running `read.py` with the --regenerate
 argument.
+
+### tts_folder.py
+This script will take in a source folder containing multiple text files.
+
+python tortoise/tts_folder.py --input_folder c:/input/folder --voice random --preset fast --output_folder c:/output/folder
+
+It will iterate through the text fild processing each text file to TTS. It will process the text files the same way as it does with read.py by breaking up the textfile into sentences. It will save each sentence to a text file in a new folder under the output folder for reference.  This can be useful if the wav file did not process properly. You can then run the read.py for the specific text file named the same as the wav file without having to hunt through the main textfile which can contain many lines of dialogue. Once a textfile is processed it will move the file to a completed folder within the same input folder. 
+
+If the script is stopped before completing all the textfiles within a folder, if restarted with the same input and output folder locations, it will parse through the folders to find the last completed sentence and continue with the next sentence of the textfile.
 
 ### API
 
@@ -288,6 +300,28 @@ Alternatively, use the api.TextToSpeech.get_conditioning_latents() to fetch the 
 After you've played with them, you can use them to generate speech by creating a subdirectory in voices/ with a single
 ".pth" file containing the pickled conditioning latents as a tuple (autoregressive_latent, diffusion_latent).
 
+### Other Utilities
+
+   ## merge_wav_file.py
+
+   This script will take a folder of multiple wave files and merger them into a single wave file.  This will be needed if using the tts_folder.py script and you encounter one of the wav files produces a flaky result. You can regenerate    the wav file then run this script to merge the file to a single file.
+
+   ## prepare_text_file_for_tts.py
+   This script is most useful if you have a epub audio book file. It will convert the epub file to txt file and it will format the file a little for better processing. Some manuel modification may need to be done after this is run to      remove unwanted text. It will also add chapter labels to sections if there is a number on a lone line. 
+
+   Before Example:
+   End of chapter text here.
+   2
+   Start of new chapter here
+
+   After Example:
+   End of chapter text here.
+   Chapter 2
+   Start of new chapter here.
+   
+   ## parse_text.py
+   Thsi script will take a single text file separate it into multiple text files based on a parsing keyword. Best used to create files based on chapters. If you have Chapter 1, Chapter 2, Chapter 3 etc, you can us "Chapter" as the         parsing keyword and will separate the textfile into chapterfiles. It will also name the files with the keyword in the filename with the value. If uou have a Prologue and Epilogue you will need to manually sepatate them into a file.
+   
 ## Tortoise-detect
 
 Out of concerns that this model might be misused, I've built a classifier that tells the likelihood that an audio clip
